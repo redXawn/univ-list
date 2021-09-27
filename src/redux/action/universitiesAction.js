@@ -3,7 +3,7 @@ import axios from "axios";
 export const getUniversities = (name, country) => (dispatch) => {
   dispatch({ type: "LOADING" });
   return axios
-    .get(`http://universities.hipolabs.com/search?name=trisakti&country=indonesia`)
+    .get(`http://universities.hipolabs.com/search?name=a&country=indonesia`)
     .then((res) => {
       return dispatch({
         type: "SET_UNIVERSITIES_LIST",
@@ -16,4 +16,8 @@ export const getUniversities = (name, country) => (dispatch) => {
     .then(() => {
       dispatch({ type: "UNLOAD" });
     });
+};
+
+export const incrementPagination = () => (dispatch) => {
+  return dispatch({ type: "INCREMENT_PAGINATION" });
 };

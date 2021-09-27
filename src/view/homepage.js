@@ -2,14 +2,18 @@ import React, { useEffect, lazy, Suspense } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import Loading from "../components/loading";
-import { getUniversities } from "../redux/action/universitiesAction";
+import infiniteScrolling from "../utils/infiniteScroll";
+import { getUniversities, incrementPagination } from "../redux/action/universitiesAction";
 
 const Card = lazy(() => import("../components/card"));
 
 const Homepage = (props) => {
+  infiniteScrolling(getMoreUnivList);
+
   const dispatch = useDispatch();
   const loading = useSelector((state) => state.loadingReducer);
-  const universitiesList = useSelector((state) => state.universitiesReducer.universities);
+  const universitiesReducer = useSelector((state) => state.universitiesReducer);
+  const { universitiesList, paginationList, currentPage, totalPage } = universitiesReducer;
 
   useEffect(() => {
     if (universitiesList.length === 0) {
@@ -18,8 +22,8 @@ const Homepage = (props) => {
   }, []);
 
   function renderUnivCard() {
-    if (universitiesList.length > 0) {
-      return universitiesList.map((item, index) => (
+    if (paginationList.length > 0) {
+      return paginationList.map((item, index) => (
         <Card key={index}>
           <label>{item.name}</label>
           <label>{item.country}</label>
@@ -30,6 +34,12 @@ const Homepage = (props) => {
       ));
     } else {
       return <div>empty</div>;
+    }
+  }
+
+  function getMoreUnivList() {
+    if (currentPage < totalPage) {
+      dispatch(incrementPagination());
     }
   }
 
