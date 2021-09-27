@@ -16,10 +16,7 @@ const errorReducer = (state = initialState, action) => {
         error: newError,
       };
     case "RESET_ERROR":
-      const resetError = {
-        errorMessage: "",
-        status: false,
-      };
+      const resetError = { ...state.error };
       return {
         ...state,
         error: resetError,
