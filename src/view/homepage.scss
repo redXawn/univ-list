@@ -25,6 +25,10 @@
     &-link {
       word-break: break-word;
     }
+    &-button {
+      min-height: 8px !important;
+      padding: 5px 5px !important;
+    }
     &-wrapper {
       display: flex;
       flex-wrap: wrap;
