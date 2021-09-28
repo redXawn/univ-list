@@ -143,6 +143,7 @@ const Homepage = (props) => {
             <Input
               label="Input Email"
               placeholder="Email"
+              type="email"
               value={emailSubscribe}
               error={errorInputEmail()}
               onChange={(e) => setEmailSubscribe(e.target.value)}

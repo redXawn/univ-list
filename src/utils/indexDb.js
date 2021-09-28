@@ -1,12 +1,19 @@
 /* istanbul ignore file */
 
 import { openDB } from "idb";
+import jwt from "jsonwebtoken";
 
 export const getIdb = async () => {
   const indexedDB = await openDB("univ_db", 1, {
     upgrade(db) {
       db.createObjectStore("univDetail", {
         keyPath: "name",
+      });
+      db.createObjectStore("userList", {
+        keyPath: "registerDate",
+      });
+      db.createObjectStore("userFavorite", {
+        keyPath: "email",
       });
     },
   });
@@ -41,4 +48,40 @@ export const getAllUnivWithSubscription = async (name) => {
   const db = await getIdb();
   const existingDetail = await db.getAll("univDetail");
   return existingDetail;
+};
+
+export const registerUser = async (userData) => {
+  const db = await getIdb();
+  const registerDate = new Date().getTime();
+
+  return jwt.sign(newUser, "secret");
+};
+
+export const checkUserEmailRegister = async (email) => {
+  const db = await getIdb();
+  const existingDetail = await db.getAll("userList");
+  const findEmail = existingDetail.find((data) => data.email === email);
+  return findEmail ? true : false;
+};
+
+export const loginUser = async (userData) => {
+  const db = await getIdb();
+  const existingDetail = await db.getAll("userList");
+  const findEmail = existingDetail.find((data) => data.email === userData.email);
+  return findEmail ? jwt.sign(findEmail, "secret") : false;
+};
+
+export const addFavoriteUniv = async (userData, univData) => {
+  const db = await getIdb();
+  const existingDetail = await db.getAll("userFavorite");
+  const findUniv = existingDetail.find((data) => data.name === univData.name);
+  if (!findUniv) {
+    const favorite = {
+      email: userData.email,
+      name: univData.name,
+    };
+    db.put("userList", favorite);
+  } else {
+    return false;
+  }
 };

@@ -10,6 +10,7 @@ const HomeHeader = () => {
 
   const universitiesReducer = useSelector((state) => state.universitiesReducer);
   const { univName, univCountry, paginationList, sortBy } = universitiesReducer;
+
   function renderSortButton() {
     if (paginationList.length !== 0) {
       const buttonList = [

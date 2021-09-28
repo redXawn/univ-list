@@ -1,6 +1,6 @@
 import React, { useEffect, useState, lazy, Suspense } from "react";
 import { connect } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 import Loading from "../loading";
@@ -12,14 +12,10 @@ const Modal = lazy(() => import("../modal"));
 const Input = lazy(() => import("../input"));
 const Button = lazy(() => import("../button"));
 
-const links = [
-  { url: "/", label: "Home" },
-  { url: "/profile", label: "Profile" },
-];
-
 const Header = () => {
   const dispatch = useDispatch();
   const history = useHistory();
+  const location = useLocation();
   const [showModalSearch, setModalSearch] = useState(false);
   const [univCountryState, setUnivCountryState] = useState("");
   const [univNameState, setUnivNameState] = useState("");
@@ -72,18 +68,22 @@ const Header = () => {
   return (
     <nav className="header--wrapper">
       <div className="header-text">
-        {links.map((data, index) => (
-          <h2 key={index} onClick={() => handleClickLink(data.url)}>
-            {data.label}
-          </h2>
-        ))}
+        <h2 onClick={() => handleClickLink("/")}>Home</h2>
+        {localStorage.getItem("token") ? (
+          <h2 onClick={() => handleClickLink("/profile")}>Profile</h2>
+        ) : (
+          <h2 onClick={() => handleClickLink("/login")}>Login</h2>
+        )}
       </div>
-      <img
-        onClick={() => setModalSearch(!showModalSearch)}
-        className="header-icon"
-        src={MagnifyingGlass}
-        alt="Magnifyng Glass"
-      />
+      {location.pathname !== "/login" ? (
+        <img
+          onClick={() => setModalSearch(!showModalSearch)}
+          className="header-icon"
+          src={MagnifyingGlass}
+          alt="Magnifyng Glass"
+        />
+      ) : null}
+
       {renderModalSearch()}
     </nav>
   );
