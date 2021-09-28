@@ -5,6 +5,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   margin: auto;
+  background-color: #e5e5e5;
 }
 
 h1,
@@ -29,4 +30,6 @@ code {
 
 .child {
   padding: 0 2em;
+  max-width: 1000px;
+  margin: auto;
 }

@@ -1,6 +1,19 @@
 .header {
   &--wrapper {
+    background-color: #ffffff;
     padding: 2em;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  &-icon {
+    height: 20px;
+    width: 20px;
+    padding: 5px;
+    cursor: pointer;
   }
   &-text {
     display: flex;

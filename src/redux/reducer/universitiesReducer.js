@@ -1,4 +1,6 @@
 const initialState = {
+  univName: "",
+  univCountry: "indonesia",
   universitiesList: [],
   paginationList: [],
   currentPage: 0,
@@ -23,6 +25,16 @@ const universitiesReducer = (state = initialState, action) => {
         ...state,
         paginationList: newPaginationList,
         currentPage: state.currentPage + 1,
+      };
+    case "SET_UNIV_NAME":
+      return {
+        ...state,
+        univName: action.payload,
+      };
+    case "SET_UNIV_COUNTRY":
+      return {
+        ...state,
+        univCountry: action.payload,
       };
     default:
       return state;
