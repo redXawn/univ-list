@@ -14,6 +14,7 @@ const Skeleton = lazy(() => import("../components/skeleton"));
 const NotFound = lazy(() => import("../components/notFound"));
 const Modal = lazy(() => import("../components/modal"));
 const Input = lazy(() => import("../components/input"));
+const HomeHeader = lazy(() => import("./homeHeader"));
 
 const Homepage = (props) => {
   infiniteScrolling(getMoreUnivList);
@@ -137,7 +138,7 @@ const Homepage = (props) => {
   function renderModalSubscribe() {
     return (
       <Modal show={showModalSubscribe} toggle={() => setShowModalSubscribe(false)}>
-        <div className="w--60 margin-auto padding-10">
+        <div className="w--80 margin-auto padding-10">
           <div className="margin-bottom-30">
             <Input
               label="Input Email"
@@ -198,10 +199,7 @@ const Homepage = (props) => {
 
   return (
     <Suspense fallback={<Loading />}>
-      <div className="homepage-univ-info">
-        <label>Name: {univName}</label>
-        <label>Country: {univCountry}</label>
-      </div>
+      <HomeHeader />
       <div className="homepage-card-wrapper">{renderUnivCard()}</div>
       <div className="homepage-card-wrapper">{renderSkeletonCard()}</div>
       {renderModalSubscribe()}

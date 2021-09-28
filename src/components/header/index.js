@@ -38,7 +38,7 @@ const Header = () => {
     return (
       <Suspense fallback={<Loading />}>
         <Modal show={showModalSearch} toggle={closeModalSearch}>
-          <div className="w--60 margin-auto padding-10">
+          <div className="w--80 margin-auto padding-10">
             <div className="margin-bottom-30">
               <Input
                 label="University Name"

@@ -1,15 +1,4 @@
 .homepage {
-  &-univ-info {
-    z-index: 5;
-    display: flex;
-    justify-content: space-around;
-    position: sticky;
-    top: 94px;
-    width: 100%;
-    background: white;
-    font-size: 20px;
-    padding-bottom: 10px;
-  }
   &-card {
     &-index {
       position: absolute;
@@ -33,6 +22,38 @@
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
+    }
+  }
+}
+
+.homeheader {
+  &-wrapper {
+    z-index: 5;
+    background: white;
+    font-size: 20px;
+    padding-top: 20px;
+    border-top: 1px solid black;
+  }
+  &-search {
+    padding: 0 20px;
+    margin-bottom: 15px;
+    h4 {
+      margin-bottom: 10px;
+    }
+    &-label {
+      display: flex;
+      justify-content: space-around;
+    }
+  }
+  &-sort {
+    border-top: 1px solid black;
+    padding: 20px;
+    h4 {
+      margin-bottom: 10px;
+    }
+    &-button {
+      width: 35% !important;
+      margin: 0 20px;
     }
   }
 }

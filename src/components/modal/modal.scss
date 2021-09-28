@@ -22,7 +22,7 @@
     transform: translate(-50%, -50%);
     background-color: white;
     padding: 1rem 1.5rem;
-    width: 50%;
+    width: 40%;
     border-radius: 0.5rem;
     overflow: auto;
   }
@@ -34,5 +34,17 @@
     position: absolute;
     top: 0px;
     right: 5px;
+  }
+}
+
+@media only screen and (max-width: 775px) {
+  .modal-content {
+    width: 60%;
+  }
+}
+
+@media only screen and (max-width: 450px) {
+  .modal-content {
+    width: 80%;
   }
 }

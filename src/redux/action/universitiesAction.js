@@ -29,3 +29,7 @@ export const setUnivName = (payload) => (dispatch) => {
 export const setUnivCountry = (payload) => (dispatch) => {
   return dispatch({ type: "SET_UNIV_COUNTRY", payload });
 };
+
+export const sortData = (payload) => (dispatch) => {
+  return dispatch({ type: "SORT_DATA", payload });
+};
