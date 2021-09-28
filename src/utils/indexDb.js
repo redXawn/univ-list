@@ -71,17 +71,38 @@ export const loginUser = async (userData) => {
   return findEmail ? jwt.sign(findEmail, "secret") : false;
 };
 
-export const addFavoriteUniv = async (userData, univData) => {
+export const addFavoriteUniv = async (userEmail, univName) => {
   const db = await getIdb();
   const existingDetail = await db.getAll("userFavorite");
-  const findUniv = existingDetail.find((data) => data.name === univData.name);
-  if (!findUniv) {
-    const favorite = {
-      email: userData.email,
-      name: univData.name,
-    };
-    db.put("userList", favorite);
+  const findUser = existingDetail.find((data) => data.email === userEmail);
+  if (findUser) {
+    const findUniv = findUser.listFavorite.find((data) => data.name === univName);
+    if (!findUniv) {
+      const newFavorite = [{ name: univName }];
+      const favorite = {
+        email: userEmail,
+        listFavorite: [...findUser.listFavorite, ...newFavorite],
+      };
+      db.put("userFavorite", favorite);
+    } else {
+      const unfavorite = findUser.listFavorite.filter((data) => data.name !== univName);
+      const newData = {
+        email: userEmail,
+        listFavorite: unfavorite,
+      };
+      db.put("userFavorite", newData);
+    }
   } else {
     return false;
   }
+};
+
+export const getUser = async (userEmail) => {
+  const db = await getIdb();
+  const existingDetail = await db.getAll("userFavorite");
+  const findUser = existingDetail.find((data) => data.email === userEmail);
+  if (findUser) {
+    return findUser;
+  }
+  return [];
 };

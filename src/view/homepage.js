@@ -4,7 +4,14 @@ import { useSelector, useDispatch } from "react-redux";
 import Loading from "../components/loading";
 import { getUniversities, incrementPagination } from "../redux/action/universitiesAction";
 import infiniteScrolling from "../utils/infiniteScroll";
-import { saveEmailSubscription, checkEmailSubscription, getAllUnivWithSubscription } from "../utils/indexDb";
+import {
+  saveEmailSubscription,
+  checkEmailSubscription,
+  getAllUnivWithSubscription,
+  addFavoriteUniv,
+  getUser,
+} from "../utils/indexDb";
+import StarIcon from "../assets/star-solid.svg";
 
 import "./homepage.scss";
 
@@ -21,6 +28,8 @@ const Homepage = (props) => {
 
   const dispatch = useDispatch();
   const loading = useSelector((state) => state.loadingReducer.loading);
+  const userReducer = useSelector((state) => state.userReducer);
+  const { email } = userReducer;
   const universitiesReducer = useSelector((state) => state.universitiesReducer);
   const { univName, univCountry, universitiesList, paginationList, currentPage, totalPage } = universitiesReducer;
 
@@ -31,6 +40,7 @@ const Homepage = (props) => {
   const [univWithSubsription, setUnivWithSubscription] = useState([]);
   const [listEmailSubscribe, setListEmailSubscribe] = useState([]);
   const [showModalListEmail, setShowModalListEmail] = useState(false);
+  const [listFavorite, setListFavorite] = useState([]);
 
   useEffect(() => {
     if (universitiesList.length === 0) {
@@ -41,6 +51,12 @@ const Homepage = (props) => {
   useEffect(() => {
     getUnivSubscribe();
   }, []);
+
+  useEffect(() => {
+    if (email) {
+      getListFavorite();
+    }
+  }, [email]);
 
   useEffect(() => {
     if (emailExist) {
@@ -59,11 +75,25 @@ const Homepage = (props) => {
     setUnivWithSubscription([...getData]);
   }
 
+  async function getListFavorite() {
+    const listUserFavorite = await getUser(email);
+    setListFavorite(listUserFavorite.listFavorite);
+  }
+
   function renderUnivCard() {
     if (paginationList.length > 0) {
       return paginationList.map((item, index) => (
         <Card customClassName="j-content--space-between" key={index}>
           <span className="homepage-card-index">{index + 1}</span>
+          {email ? (
+            <img
+              onClick={() => clickFavorite(email, item.name)}
+              className={`homepage-card-star ${checkIsFavorite(item.name)}`}
+              src={StarIcon}
+              alt="Star"
+            />
+          ) : null}
+
           <div className="d--flex f-direction--column a-item--center">
             <div className="homepage-card-country margin-bottom-10">
               <label className="margin-right-5">{item.country}</label>
@@ -87,6 +117,20 @@ const Homepage = (props) => {
     }
   }
 
+  async function clickFavorite(userEmail, univName) {
+    await addFavoriteUniv(email, univName);
+    console.log("wait");
+    getListFavorite(userEmail);
+  }
+
+  function checkIsFavorite(univName) {
+    const check = listFavorite.find((data) => data.name === univName);
+    if (check) {
+      return "homepage-card-star-favorite";
+    }
+    return "";
+  }
+
   function clickSubscribeCard(data) {
     setUnivSubscribe(data);
     setShowModalSubscribe(true);
@@ -96,8 +140,8 @@ const Homepage = (props) => {
     const check = univWithSubsription.find((data) => data.name === name);
     if (check && check.name) {
       return (
-        <div className="w--100" onClick={() => openModalListEmail(check.emailSubscription)}>
-          <label>Subscriber: {check.emailSubscription.length}</label>
+        <div className="w--100  homepage-total-subscribe" onClick={() => openModalListEmail(check.emailSubscription)}>
+          <label className="homepage-total-subscribe">Subscriber: {check.emailSubscription.length}</label>
         </div>
       );
     }

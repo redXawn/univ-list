@@ -22,6 +22,12 @@ const LoginRegisterPage = () => {
     confirmPassword: "password123",
   });
 
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      history.replace("/");
+    }
+  }, []);
+
   function renderContent() {
     if (type === "login") {
       return (

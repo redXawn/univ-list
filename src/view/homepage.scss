@@ -23,6 +23,25 @@
       flex-wrap: wrap;
       justify-content: center;
     }
+    &-star {
+      width: 20px;
+      height: 20px;
+      position: absolute;
+      right: 10px;
+      top: 5px;
+      padding: 5px;
+      filter: grayscale(1);
+      cursor: pointer;
+      &-favorite {
+        filter: unset;
+      }
+      // svg path {
+      //   fill: blue !important;
+      // }
+    }
+  }
+  &-total-subscribe {
+    cursor: pointer;
   }
 }
 

@@ -1,10 +1,12 @@
 import React, { useEffect, useState, lazy, Suspense } from "react";
 import { connect } from "react-redux";
 import { useHistory, useLocation } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import jwt from "jsonwebtoken";
 
 import Loading from "../loading";
 import { getUniversities, setUnivCountry, setUnivName } from "../../redux/action/universitiesAction";
+import { setToken, setEmail } from "../../redux/action/userAction";
 import MagnifyingGlass from "../../assets/magnifying-glass-solid.svg";
 import "./header.scss";
 
@@ -19,6 +21,17 @@ const Header = () => {
   const [showModalSearch, setModalSearch] = useState(false);
   const [univCountryState, setUnivCountryState] = useState("");
   const [univNameState, setUnivNameState] = useState("");
+
+  const token = useSelector((state) => state.userReducer.token);
+
+  useEffect(() => {
+    if (localStorage.getItem("token") && !token) {
+      const token = localStorage.getItem("token");
+      const decoded = jwt.verify(token, "secret");
+      dispatch(setToken(token));
+      dispatch(setEmail(decoded.email));
+    }
+  }, []);
 
   function handleClickLink(link) {
     history.push(link);
