@@ -20,6 +20,13 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 4. Split node modules chunk
 5. Setting optimized build using `Craco`
 
+### Before Optimize
+![Before](https://user-images.githubusercontent.com/32459976/135231924-96d534b1-fe5e-43cf-8b30-aa2d6a9c4064.png)
+
+### After Optimize
+![After](https://user-images.githubusercontent.com/32459976/135231934-08d7b428-2309-4e37-b17e-a97cee17fa7d.png)
+
+
 ## Available Scripts
 
 In the project directory, you can run:
