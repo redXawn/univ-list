@@ -3,13 +3,14 @@ import { useSelector, useDispatch } from "react-redux";
 
 import Loading from "../components/loading";
 import { getUniversities, incrementPagination } from "../redux/action/universitiesAction";
+import { setListFavorite } from "../redux/action/userAction";
 import infiniteScrolling from "../utils/infiniteScroll";
 import {
   saveEmailSubscription,
   checkEmailSubscription,
   getAllUnivWithSubscription,
   addFavoriteUniv,
-  getUser,
+  getUserListFavorite,
 } from "../utils/indexDb";
 import StarIcon from "../assets/star-solid.svg";
 
@@ -29,18 +30,17 @@ const Homepage = (props) => {
   const dispatch = useDispatch();
   const loading = useSelector((state) => state.loadingReducer.loading);
   const userReducer = useSelector((state) => state.userReducer);
-  const { email } = userReducer;
+  const { email, listFavorite } = userReducer;
   const universitiesReducer = useSelector((state) => state.universitiesReducer);
   const { univName, univCountry, universitiesList, paginationList, currentPage, totalPage } = universitiesReducer;
 
   const [showModalSubscribe, setShowModalSubscribe] = useState(false);
   const [univSubscribe, setUnivSubscribe] = useState({});
-  const [emailSubscribe, setEmailSubscribe] = useState("andrew@gmail.com");
+  const [emailSubscribe, setEmailSubscribe] = useState("");
   const [emailExist, setEmailExist] = useState(false);
   const [univWithSubsription, setUnivWithSubscription] = useState([]);
   const [listEmailSubscribe, setListEmailSubscribe] = useState([]);
   const [showModalListEmail, setShowModalListEmail] = useState(false);
-  const [listFavorite, setListFavorite] = useState([]);
 
   useEffect(() => {
     if (universitiesList.length === 0) {
@@ -53,8 +53,15 @@ const Homepage = (props) => {
   }, []);
 
   useEffect(() => {
-    if (email) {
+    if (email && listFavorite.length === 0) {
       getListFavorite();
+      setEmailSubscribe(email);
+    }
+  }, [email, listFavorite]);
+
+  useEffect(() => {
+    if (email) {
+      setEmailSubscribe(email);
     }
   }, [email]);
 
@@ -76,8 +83,10 @@ const Homepage = (props) => {
   }
 
   async function getListFavorite() {
-    const listUserFavorite = await getUser(email);
-    setListFavorite(listUserFavorite.listFavorite);
+    const listUserFavorite = await getUserListFavorite(email);
+    if (listUserFavorite.length > 0) {
+      dispatch(setListFavorite(listUserFavorite));
+    }
   }
 
   function renderUnivCard() {
@@ -119,7 +128,6 @@ const Homepage = (props) => {
 
   async function clickFavorite(userEmail, univName) {
     await addFavoriteUniv(email, univName);
-    console.log("wait");
     getListFavorite(userEmail);
   }
 
@@ -181,7 +189,11 @@ const Homepage = (props) => {
 
   function renderModalSubscribe() {
     return (
-      <Modal show={showModalSubscribe} toggle={() => setShowModalSubscribe(false)}>
+      <Modal
+        show={showModalSubscribe}
+        toggle={() => {
+          setShowModalSubscribe(false), setEmailExist(false);
+        }}>
         <div className="w--80 margin-auto padding-10">
           <div className="margin-bottom-30">
             <Input
@@ -219,7 +231,7 @@ const Homepage = (props) => {
     if (!checkEmail) {
       await saveEmailSubscription(univSubscribe, emailSubscribe);
       setShowModalSubscribe(false);
-      setEmailSubscribe("");
+      email ? setEmailSubscribe(email) : setEmailSubscribe("");
       setEmailExist(false);
       getUnivSubscribe();
     } else {

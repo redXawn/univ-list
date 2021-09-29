@@ -6,6 +6,7 @@ const Header = React.lazy(() => import("./components/header"));
 const NotFound = React.lazy(() => import("./components/notFound"));
 const Homepage = React.lazy(() => import("./view/homepage"));
 const LoginRegister = React.lazy(() => import("./view/loginRegister"));
+const Profile = React.lazy(() => import("./view/profile"));
 
 const RouterApp = (props) => {
   return (
@@ -16,6 +17,7 @@ const RouterApp = (props) => {
           <Switch>
             <Route exact path="/" component={Homepage} />
             <Route exact path="/login" component={LoginRegister} />
+            <Route exact path="/profile" component={Profile} />
             <Route component={NotFound} />
           </Switch>
         </div>

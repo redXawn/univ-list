@@ -22,10 +22,10 @@ const Header = () => {
   const [univCountryState, setUnivCountryState] = useState("");
   const [univNameState, setUnivNameState] = useState("");
 
-  const token = useSelector((state) => state.userReducer.token);
+  const email = useSelector((state) => state.userReducer.email);
 
   useEffect(() => {
-    if (localStorage.getItem("token") && !token) {
+    if (localStorage.getItem("token") && !email) {
       const token = localStorage.getItem("token");
       const decoded = jwt.verify(token, "secret");
       dispatch(setToken(token));

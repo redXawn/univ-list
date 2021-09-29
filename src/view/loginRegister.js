@@ -1,7 +1,9 @@
 import React, { useEffect, useState, lazy, Suspense, Fragment } from "react";
 import { useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 import Loading from "../components/loading";
+import { setEmail } from "../redux/action/userAction";
 import { registerUser, checkUserEmailRegister, loginUser } from "../utils/indexDb";
 
 import "./loginRegister.scss";
@@ -11,6 +13,8 @@ const Button = lazy(() => import("../components/button"));
 
 const LoginRegisterPage = () => {
   const history = useHistory();
+  const dispatch = useDispatch();
+
   const [type, setType] = useState("login");
   const [loginData, setLoginData] = useState({
     email: "andrew@gmail.com",
@@ -124,6 +128,7 @@ const LoginRegisterPage = () => {
     if (!check) {
       const token = await registerUser(registerData);
       localStorage.setItem("token", token);
+      setUserData(registerData.email);
       history.push("/");
     } else {
       alert("Email Already Used");
@@ -134,10 +139,15 @@ const LoginRegisterPage = () => {
     const token = await loginUser(loginData);
     if (token) {
       localStorage.setItem("token", token);
+      setUserData(loginData.email);
       history.push("/");
     } else {
-      alert("Wrong Email or Password");
+      alert("Incorrect Credential");
     }
+  }
+
+  async function setUserData(userEmail) {
+    dispatch(setEmail(userEmail));
   }
 
   return (
