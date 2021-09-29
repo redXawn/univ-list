@@ -23,7 +23,7 @@
   "scripts": {
     "start": "react-scripts start",
     "craco": "craco start",
-    "build": "react-scripts build",
+    "build": "craco build",
     "test": "react-scripts test",
     "coverage": "npm run test -- --coverage --watchAll=true",
     "eject": "react-scripts eject"
