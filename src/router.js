@@ -8,7 +8,7 @@ const Homepage = React.lazy(() => import("./view/homepage"));
 const LoginRegister = React.lazy(() => import("./view/loginRegister"));
 const Profile = React.lazy(() => import("./view/profile"));
 
-const RouterApp = (props) => {
+const RouterApp = () => {
   return (
     <Suspense fallback={<Loading />}>
       <Router>

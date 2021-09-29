@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import "./loading.scss";
 
-const Loading = (props) => {
+const Loading = () => {
   useEffect(() => {
     document.body.style.overflow = "hidden";
     return () => {

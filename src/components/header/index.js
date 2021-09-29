@@ -1,5 +1,4 @@
 import React, { useEffect, useState, lazy, Suspense } from "react";
-import { connect } from "react-redux";
 import { useHistory, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import jwt from "jsonwebtoken";

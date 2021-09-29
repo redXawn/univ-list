@@ -9,7 +9,7 @@ const initialState = {
 };
 const universitiesReducer = (state = initialState, action) => {
   switch (action.type) {
-    case "SET_UNIVERSITIES_LIST":
+    case "SET_UNIVERSITIES_LIST": {
       const totalPageCount = Math.ceil(action.payload.length / 10);
       const firstLoad = action.payload.slice(0, 10);
       if (state.sortBy) {
@@ -24,7 +24,8 @@ const universitiesReducer = (state = initialState, action) => {
         currentPage: 1,
         totalPage: totalPageCount,
       };
-    case "INCREMENT_PAGINATION":
+    }
+    case "INCREMENT_PAGINATION": {
       const nextSlice = state.currentPage * 10;
       const getMoreData = state.universitiesList.slice(nextSlice, nextSlice + 10);
       let newPaginationList = [...state.paginationList, ...getMoreData];
@@ -38,7 +39,8 @@ const universitiesReducer = (state = initialState, action) => {
         paginationList: newPaginationList,
         currentPage: state.currentPage + 1,
       };
-    case "SORT_DATA":
+    }
+    case "SORT_DATA": {
       const currentPaginationData = [...state.paginationList];
       const sortPagination = currentPaginationData.sort(function (a, b) {
         return a[action.payload].localeCompare(b[action.payload]);
@@ -48,16 +50,19 @@ const universitiesReducer = (state = initialState, action) => {
         paginationList: sortPagination,
         sortBy: action.payload,
       };
-    case "SET_UNIV_NAME":
+    }
+    case "SET_UNIV_NAME": {
       return {
         ...state,
         univName: action.payload,
       };
-    case "SET_UNIV_COUNTRY":
+    }
+    case "SET_UNIV_COUNTRY": {
       return {
         ...state,
         univCountry: action.payload,
       };
+    }
     default:
       return state;
   }

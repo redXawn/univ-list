@@ -44,7 +44,7 @@ export const checkEmailSubscription = async (name, email) => {
   return false;
 };
 
-export const getAllUnivWithSubscription = async (name) => {
+export const getAllUnivWithSubscription = async () => {
   const db = await getIdb();
   const existingDetail = await db.getAll("univDetail");
   return existingDetail;

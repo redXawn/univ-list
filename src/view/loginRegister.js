@@ -1,4 +1,4 @@
-import React, { useEffect, useState, lazy, Suspense, Fragment } from "react";
+import React, { useEffect, useState, lazy, Suspense } from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
@@ -17,13 +17,13 @@ const LoginRegisterPage = () => {
 
   const [type, setType] = useState("login");
   const [loginData, setLoginData] = useState({
-    email: "andrew@gmail.com",
-    password: "password123",
+    email: "",
+    password: "",
   });
   const [registerData, setRegisterData] = useState({
-    email: "andrew@gmail.com",
-    password: "password123",
-    confirmPassword: "password123",
+    email: "",
+    password: "",
+    confirmPassword: "",
   });
 
   useEffect(() => {

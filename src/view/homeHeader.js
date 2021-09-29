@@ -1,6 +1,7 @@
-import React, { useEffect, useState, lazy, Suspense, Fragment } from "react";
+import React, { lazy, Suspense } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
+import Loading from "../components/loading";
 import { sortData } from "../redux/action/universitiesAction";
 
 const Button = lazy(() => import("../components/button"));
@@ -18,7 +19,7 @@ const HomeHeader = () => {
         { text: "Country", key: "country" },
       ];
       return (
-        <Fragment>
+        <Suspense fallback={<Loading />}>
           <h4>Sort By: {sortBy}</h4>
           <div className="d--flex j-content--center">
             {buttonList.map((item, index) => (
@@ -31,7 +32,7 @@ const HomeHeader = () => {
               </Button>
             ))}
           </div>
-        </Fragment>
+        </Suspense>
       );
     }
   }

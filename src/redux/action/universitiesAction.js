@@ -11,6 +11,7 @@ export const getUniversities = (name, country) => (dispatch) => {
       });
     })
     .catch((error) => {
+      console.log("error", error);
       dispatch({ type: "SET_ERROR", payload: { errorMessage: "error", status: true } });
     })
     .then(() => {

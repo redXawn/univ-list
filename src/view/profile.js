@@ -1,14 +1,13 @@
-import React, { useEffect, useState, lazy, Suspense, Fragment } from "react";
+import React, { useEffect, lazy, Suspense } from "react";
 import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
 import Loading from "../components/loading";
-import { setListFavorite, setEmail, resetUser } from "../redux/action/userAction";
+import { setListFavorite, resetUser } from "../redux/action/userAction";
 import { getUserListFavorite } from "../utils/indexDb";
 
 import "./profile.scss";
 
-const Input = lazy(() => import("../components/input"));
 const Button = lazy(() => import("../components/button"));
 
 const LoginRegisterPage = () => {

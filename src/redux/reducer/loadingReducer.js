@@ -3,21 +3,24 @@ const initialState = {
 };
 const loadingReducer = (state = initialState, action) => {
   switch (action.type) {
-    case "LOADING":
+    case "LOADING": {
       return {
         ...state,
         loading: state.loading + 1,
       };
-    case "UNLOAD":
+    }
+    case "UNLOAD": {
       return {
         ...state,
         loading: state.loading - 1,
       };
-    case "RESET_LOADING":
+    }
+    case "RESET_LOADING": {
       return {
         ...state,
         loading: 0,
       };
+    }
     default:
       return state;
   }

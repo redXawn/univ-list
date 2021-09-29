@@ -24,7 +24,7 @@ const Modal = lazy(() => import("../components/modal"));
 const Input = lazy(() => import("../components/input"));
 const HomeHeader = lazy(() => import("./homeHeader"));
 
-const Homepage = (props) => {
+const Homepage = () => {
   infiniteScrolling(getMoreUnivList);
 
   const dispatch = useDispatch();

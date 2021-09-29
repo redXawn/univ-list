@@ -5,28 +5,32 @@ const initialState = {
 };
 const universitiesReducer = (state = initialState, action) => {
   switch (action.type) {
-    case "SET_TOKEN":
+    case "SET_TOKEN": {
       return {
         ...state,
         token: action.payload,
       };
-    case "SET_EMAIL":
+    }
+    case "SET_EMAIL": {
       return {
         ...state,
         email: action.payload,
       };
-    case "SET_LIST_FAVORITE":
+    }
+    case "SET_LIST_FAVORITE": {
       return {
         ...state,
         listFavorite: action.payload,
       };
-    case "RESET_USER":
+    }
+    case "RESET_USER": {
       return {
         ...state,
         token: "",
         email: "",
         listFavorite: [],
       };
+    }
     default:
       return state;
   }
