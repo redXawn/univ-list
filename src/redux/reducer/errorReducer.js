@@ -17,10 +17,12 @@ const errorReducer = (state = initialState, action) => {
       };
     }
     case "RESET_ERROR": {
-      const resetError = { ...state.error };
       return {
         ...state,
-        error: resetError,
+        error: {
+          errorMessage: "",
+          status: false,
+        },
       };
     }
     default:
